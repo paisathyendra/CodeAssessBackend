@@ -29,3 +29,5 @@ Spend as much time as you like, but try to consider this as "a short excercise".
 You may retain, remove or customise as much of the "basic" app as you feel necessary.
 When submitting the PR, feel free to add commentary.
 You may create and use a database for this process if you feel it is necessary, but you must use the [Yii2 Migrations](http://www.yiiframework.com/doc-2.0/guide-db-migrations.html) for table creation.
+
+This assessment generally takes between 30 and 90 minutes to complete.
