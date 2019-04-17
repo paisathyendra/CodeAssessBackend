@@ -4,7 +4,7 @@
 * The data can be filtered by code, School Wise and Year-wise count
 * The data can be sorted by different fields
 * Whenever there is difference in the number of records provied by NSW Government website the data will be automatically imported and a log will be created
-* This log will be available only for the logged in users
+* This log will be available only for the logged in users (use username: admin and password: admin)
 
 Note: 
 * Please run yii migration before starting the application 
