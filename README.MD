@@ -7,8 +7,8 @@
 * This log will be available only for the logged in users
 
 Note: 
-Please run yii migration before starting the application 
-Time taken to complete this task is nearly 130 minutes
+* Please run yii migration before starting the application 
+* Time taken to complete this task is nearly 130 minutes
 
 # Tech Assessment - Backend
 
