@@ -54,24 +54,10 @@ class EnrolmentsController extends Controller
             // Add new data
             foreach ($records as $record) {
                 $enrolment = new Enrolments();
-                $enrolment->id = $record['_id'];
-                $enrolment->code = $record['School Code'];
-                $enrolment->school_name = $record['School Name'];
-                $enrolment->y2004 = $record['HC_2004'];
-                $enrolment->y2005 = $record['HC_2005'];
-                $enrolment->y2006 = $record['HC_2006'];
-                $enrolment->y2007 = $record['HC_2007'];
-                $enrolment->y2008 = $record['HC_2008'];
-                $enrolment->y2009 = $record['HC_2009'];
-                $enrolment->y2010 = $record['HC_2010'];
-                $enrolment->y2011 = $record['HC_2011'];
-                $enrolment->y2012 = $record['HC_2012'];
-                $enrolment->y2013 = $record['HC_2013'];
-                $enrolment->y2014 = $record['HC_2014'];
-                $enrolment->y2015 = $record['HC_2015'];
-                $enrolment->y2016 = $record['HC_2016'];
-                $enrolment->y2017 = $record['HC_2017'];
-                $enrolment->y2018 = $record['HC_2018'];
+
+                $data = $this->mapEnrolmentFields($record);
+
+                $enrolment->attributes = $data;
                 $enrolment->save();
             }
 
@@ -199,5 +185,35 @@ class EnrolmentsController extends Controller
         }
 
         return array($numberOfRecords, $records);
+    }
+
+    /**
+     * Map Enrolment Fields
+     * @param $record
+     * @return array
+     */
+    private function mapEnrolmentFields($record)
+    {
+        $data = array();
+
+        $data['id'] = $record['_id'];
+        $data['code'] = $record['School Code'];
+        $data['school_name'] = $record['School Name'];
+        $data['y2004'] = $record['HC_2004'];
+        $data['y2005'] = $record['HC_2005'];
+        $data['y2006'] = $record['HC_2006'];
+        $data['y2007'] = $record['HC_2007'];
+        $data['y2008'] = $record['HC_2008'];
+        $data['y2009'] = $record['HC_2009'];
+        $data['y2010'] = $record['HC_2010'];
+        $data['y2011'] = $record['HC_2011'];
+        $data['y2012'] = $record['HC_2012'];
+        $data['y2013'] = $record['HC_2013'];
+        $data['y2014'] = $record['HC_2014'];
+        $data['y2015'] = $record['HC_2015'];
+        $data['y2016'] = $record['HC_2016'];
+        $data['y2017'] = $record['HC_2017'];
+        $data['y2018'] = $record['HC_2018'];
+        return $data;
     }
 }
