@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\Logs;
-use Yii;
 use app\models\Enrolments;
 use app\models\EnrolmentsSearch;
+use app\models\Logs;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * EnrolmentsController implements the CRUD actions for Enrolments model.
@@ -36,6 +36,7 @@ class EnrolmentsController extends Controller
      */
     public function actionIndex()
     {
+        // Fetch data from NSW API
         list($numberOfRecords, $records) = $this->importData();
 
         // Get count of last imported records count
@@ -46,8 +47,10 @@ class EnrolmentsController extends Controller
         // Check if there is any difference in the number of records imported
         if ($numberOfRecords <> $logs['number_of_records']) {
             $model = new Enrolments();
+            // Delete existing data from table
             $model->deleteAll();
 
+            // Add new data
             foreach ($records as $record) {
                 $enrolment = new Enrolments();
                 $enrolment->id = $record['_id'];
@@ -73,6 +76,7 @@ class EnrolmentsController extends Controller
 
             // Log imported data details
             $logs = new Logs();
+            // ToDo: Log time in Australia Timezone
             $logs->import_date = date('Y-m-d H:i:s');
             $logs->number_of_records = $numberOfRecords;
             $logs->comments = '';
@@ -171,8 +175,10 @@ class EnrolmentsController extends Controller
     }
 
     /**
+     *
      * Call NSW API to get latest data
      * @return array
+     * ToDo: Move this functionality to a import data controller
      */
     public function importData()
     {
