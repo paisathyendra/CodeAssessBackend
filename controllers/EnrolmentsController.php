@@ -185,6 +185,9 @@ class EnrolmentsController extends Controller
      */
     public function importData()
     {
+        $numberOfRecords = 0;
+        $records = array();
+
         // fetch data from NSW Site
         $output = file_get_contents('https://data.cese.nsw.gov.au/data/api/3/action/datastore_search?resource_id=da0fd2ec-6024-3206-98d4-81a2c663664b&limit=5000');
 
@@ -193,7 +196,8 @@ class EnrolmentsController extends Controller
 
             $numberOfRecords = isset($response['result']['total']) ? $response['result']['total'] : 0;
             $records = $response['result']['records'];
-            return array($numberOfRecords, $records);
         }
+
+        return array($numberOfRecords, $records);
     }
 }
