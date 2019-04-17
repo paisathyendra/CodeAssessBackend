@@ -44,6 +44,7 @@ class EnrolmentsController extends Controller
             ->where(['id' => Logs::find()->max('id')])
             ->one();
 
+        // ToDo: Add additional condition to check if its a fresh import
         // Check if there is any difference in the number of records imported
         if ($numberOfRecords <> $logs['number_of_records']) {
             $model = new Enrolments();
@@ -147,9 +148,11 @@ class EnrolmentsController extends Controller
     /**
      * Deletes an existing Enrolments model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -175,17 +178,22 @@ class EnrolmentsController extends Controller
     }
 
     /**
-     *
      * Call NSW API to get latest data
      * @return array
      * ToDo: Move this functionality to a import data controller
+     * ToDo: Use HTTP Client (like Guzzle) for GET request
      */
     public function importData()
     {
+        // fetch data from NSW Site
         $output = file_get_contents('https://data.cese.nsw.gov.au/data/api/3/action/datastore_search?resource_id=da0fd2ec-6024-3206-98d4-81a2c663664b&limit=5000');
-        $response = json_decode($output, true);
-        $numberOfRecords = $response['result']['total'];
-        $records = $response['result']['records'];
-        return array($numberOfRecords, $records);
+
+        if (!empty($output)) {
+            $response = json_decode($output, true);
+
+            $numberOfRecords = isset($response['result']['total']) ? $response['result']['total'] : 0;
+            $records = $response['result']['records'];
+            return array($numberOfRecords, $records);
+        }
     }
 }
