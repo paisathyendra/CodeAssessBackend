@@ -1,3 +1,13 @@
+# Usage Instructions
+
+* The home page displays Enrolements data yearwise for different government schools in NSW
+* The data can be filtered by code, School Wise and Year-wise count
+* The data can be sorted by different fields
+* Whenever there is difference in the number of records provied by NSW Government website the data will be automatically imported and a log will be created
+* This log will be available only for the logged in users
+
+Note: Time taken to complete this task is nearly 130 minutes
+
 # Tech Assessment - Backend
 
 ## Overview
