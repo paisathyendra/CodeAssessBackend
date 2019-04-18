@@ -37,7 +37,7 @@ class EnrolmentsController extends Controller
     public function actionIndex()
     {
         // Fetch data from NSW API
-        list($numberOfRecords, $records) = $this->importData();
+        list($numberOfRecords, $records) = $this->fetchData();
 
         // Get count of last imported records count
         $logs = Logs::find()
@@ -68,7 +68,6 @@ class EnrolmentsController extends Controller
             $logs->number_of_records = $numberOfRecords;
             $logs->comments = '';
             $logs->save();
-
         }
 
         $searchModel = new EnrolmentsSearch();
@@ -169,13 +168,13 @@ class EnrolmentsController extends Controller
      * ToDo: Move this functionality to a import data controller
      * ToDo: Use HTTP Client (like Guzzle) for GET request
      */
-    public function importData()
+    public function fetchData()
     {
         $numberOfRecords = 0;
         $records = array();
 
         // fetch data from NSW Site
-        $output = file_get_contents('https://data.cese.nsw.gov.au/data/api/3/action/datastore_search?resource_id=da0fd2ec-6024-3206-98d4-81a2c663664b&limit=5000');
+        $output = $this->getDataFromAPI();
 
         if (!empty($output)) {
             $response = json_decode($output, true);
@@ -215,5 +214,15 @@ class EnrolmentsController extends Controller
         $data['y2017'] = $record['HC_2017'];
         $data['y2018'] = $record['HC_2018'];
         return $data;
+    }
+
+    /**
+     * Get Data from API
+     * @return false|string
+     */
+    public function getDataFromAPI()
+    {
+        $output = file_get_contents('https://data.cese.nsw.gov.au/data/api/3/action/datastore_search?resource_id=da0fd2ec-6024-3206-98d4-81a2c663664b&limit=5000');
+        return $output;
     }
 }
