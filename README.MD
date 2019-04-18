@@ -7,6 +7,7 @@
 * This log will be available only for the logged in users (use username: admin and password: admin)
 
 Note: 
+* Please create a database named 'yii2basic' in your local database
 * Please run yii migration before starting the application 
 * Time taken to complete this task is nearly 130 minutes
 
